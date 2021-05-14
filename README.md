@@ -1,6 +1,6 @@
-# Vaccine Messenger
+# Covid-19 Vaccine Availability Messenger
 
-This is a prototype project of how to get Vaccine Notification in Telegram when any slot is available in a particular district of a city.
+This is a prototype project of how to get Vaccine Notification in Telegram when any slot is available in a particular district of your city in India.
 
 ## Description
 This is a c# console application. It uses multitasking concept to trigger APIs parallelly and at different time intervals as per need. It uses Co-WIN public APIs to get information about vaccine availability. And sends the notification to user using Telegram Bot.
@@ -20,5 +20,6 @@ This is a c# console application. It uses multitasking concept to trigger APIs p
 3. Postman
 4. [Co-WIN Public APIs](https://apisetu.gov.in/public/marketplace/api/cowin) 
 
-## Futurescope 
-Automatically reading queries from bot and mapping with the logic to overcome manual part of adding user chatIds for a particular district. 
+## Future Scope 
+1. Automatically reading queries from bot and mapping with the logic to overcome manual part of adding user chatIds for a particular district. 
+2. To expand this project for other countries. 
