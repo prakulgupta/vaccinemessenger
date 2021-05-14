@@ -9,27 +9,29 @@
         public IList<AppointmentDetails> sessions { get; set; }
     }
 
-    public class CalanderResult
+    public class CalanderResult 
     {
         public IList<Center> centers { get; set; }
     }
 
-    public class Center
+    public class Center 
     {
 
         public int center_id { get; set; }
         public string name { get; set; }
 
-        public string district_name { get; set; }
         public string address { get; set; }
 
         public string pincode { get; set; }
+
+        public string district_name { get; set; }
+
         public string fee_type { get; set; }
 
         public IList<Session> sessions { get; set; }
     }
 
-    public class Session
+    public class Session 
     {
         public string session_id { get; set; }
         public string date { get; set; }

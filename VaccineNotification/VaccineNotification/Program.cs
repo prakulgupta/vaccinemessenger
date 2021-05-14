@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Net.Http;
     using System.Net.Http.Headers;
+    using System.Text;
     using System.Threading.Tasks;
     using Newtonsoft.Json;
     using Telegram.Bot;
@@ -13,61 +14,126 @@
     class Program
     {
         private const string TelegramToken = ""; // Specify your telegram bot token here.
+
         static void Main(string[] args)
         {
-            var periodTimeSpan = TimeSpan.FromHours(1);
+            var periodTimeSpan = TimeSpan.FromMinutes(23);
+            var periodTimeSpan1 = TimeSpan.FromMinutes(2);
 
-            // Creation of list is manual for now
+            // Configure User List with ChatId and their name as per need.
             var hydDic = new Dictionary<string, string>()
             {
-                { "name", "chatId" },
+                { "UserName1", "ChatId1" },
             };
 
             var amritsarDic = new Dictionary<string, string>()
             {
+                { "UserName1", "ChatId1" },
             };
 
             var jbpList = new Dictionary<string, string>()
              {
-
+                { "UserName1", "ChatId1" },
             };
 
             var southeastdelhiList = new Dictionary<string, string>()
              {
+                { "UserName1", "ChatId1" },
+            };
 
+            var southdelhiList = new Dictionary<string, string>()
+             {
+                { "UserName1", "ChatId1" },
+            };
+
+            var northdelhiList = new Dictionary<string, string>()
+             {
+                { "UserName1", "ChatId1" },
+            };
+
+            var westdelhiList = new Dictionary<string, string>()
+             {
+                { "UserName1", "ChatId1" },
+            };
+
+            var keralaList = new Dictionary<string, string>()
+             {
+                { "UserName1", "ChatId1" },
             };
 
             var bhopalList = new Dictionary<string, string>()
              {
-
+                { "UserName1", "ChatId1" },
             };
 
-            while (true)
+            var ghaziabadList = new Dictionary<string, string>()
+             {
+                { "UserName1", "ChatId1" },
+            };
+
+            var pathankotList = new Dictionary<string, string>()
+             {
+                { "UserName1", "ChatId1" },
+            };
+            var taskList = new List<Task>();
+
+            var task1 = Task.Run(() =>
             {
-                var delayTask = Task.Delay(periodTimeSpan);
-                try
+                while (true)
                 {
-                    var currentDate = DateTime.Now;
-                    var formatedDate = currentDate.ToString("dd-MM-yyyy");
-
-                    RunAsyncCalander(formatedDate, "581", hydDic, 18, "Hyderabad").Wait();
-                    RunAsyncCalander(formatedDate, "315", jbpList, 18, "Jabalpur").Wait();
-                    RunAsyncCalander(formatedDate, "144", southeastdelhiList, 18, "SouthEastDelhi").Wait();
-                    RunAsyncCalander(formatedDate, "312", bhopalList, 18, "Bhopal").Wait();
-                    RunAsyncCalander(formatedDate, "485", amritsarDic, 18, "Amritsar").Wait();
-                    //RunAsyncCalander(formatedDate, "55", amritsarDic, 18, "Assam-Morigaon").Wait();
-
-                    Console.WriteLine("Round completed: " + currentDate.ToString());
+                    try
+                    {
+                        var delayTask = Task.Delay(periodTimeSpan);
+                        var currentDate = DateTime.Now;
+                        var formatedDate = currentDate.ToString("dd-MM-yyyy");
+                        //RunAsyncCalander(formatedDate, "149", southdelhiList, 18, "SouthDelhi").Wait();
+                        RunAsyncCalander(formatedDate, "581", hydDic, 18, "Hyderabad").Wait();
+                        RunAsyncCalander(formatedDate, "312", bhopalList, 18, "Bhopal").Wait();
+                        RunAsyncCalander(formatedDate, "485", amritsarDic, 18, "Amritsar").Wait();
+                        RunAsyncCalander(formatedDate, "486", pathankotList, 18, "Pathankot").Wait();
+                        RunAsyncCalander(formatedDate, "651", ghaziabadList, 18, "UP Ghaziabad").Wait();
+                        //RunAsyncCalander(formatedDate, "144", southeastdelhiList, 18, "SouthEastDelhi").Wait();
+                        RunAsyncCalander(formatedDate, "142", westdelhiList, 18, "WestDelhi").Wait();
+                        RunAsyncCalander(formatedDate, "140", westdelhiList, 18, "NewDelhi").Wait();
+                        RunAsyncCalander(formatedDate, "143", northdelhiList, 18, "NorthWestDelhi").Wait();
+                        Console.WriteLine("Task 1 Round completed: " + currentDate.ToString());
+                        delayTask.Wait();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                 }
-                catch (Exception ex)
+            });
+
+            var task2 = Task.Run(() =>
+            {
+                while (true)
                 {
-
-                    Console.WriteLine(ex);
+                    try
+                    {
+                        var delayTask = Task.Delay(periodTimeSpan1);
+                        var currentDate = DateTime.Now;
+                        var formatedDate = currentDate.ToString("dd-MM-yyyy");
+                        RunAsyncCalander(formatedDate, "315", jbpList, 18, "Jabalpur").Wait();
+                        RunAsyncCalander(formatedDate, "303", keralaList, 18, "Kerala Thrissur").Wait();
+                        RunAsyncCalander(formatedDate, "308", keralaList, 18, "Kerala Palakkad").Wait();
+                        RunAsyncCalander(formatedDate, "307", keralaList, 18, "Kerala Ernakulam").Wait();
+                        RunAsyncCalander(formatedDate, "296", keralaList, 18, "Kerala Thiruvananthapuram").Wait();
+                        RunAsyncCalander(formatedDate, "295", keralaList, 18, "Kerala Kasargod").Wait();
+                        Console.WriteLine("Task 2 Round completed: " + currentDate.ToString());
+                        delayTask.Wait();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                 }
+            });
 
-                delayTask.Wait();
-            }
-
+            taskList.Add(task1);
+            taskList.Add(task2);
+            Task.WhenAll(taskList.ToArray()).Wait();
 
             //GetTelegramBotQueries().Wait();
         }
@@ -78,7 +144,7 @@
             {
                 using (var client = new HttpClient())
                 {
-                    var url = $"https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id={districtId}&date={date}";
+                    var url = $"https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id={districtId}&date={date}";                    
                     client.BaseAddress = new Uri(url);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -133,24 +199,31 @@
                     {
                         var data = await response.Content.ReadAsStringAsync();
                         CalanderResult res = JsonConvert.DeserializeObject<CalanderResult>(data);
-                        var filteredRes = res.centers.Where(x => x.sessions.Where(y => y.min_age_limit == minAge && y.available_capacity > 0).ToList().Count > 0).ToList();
+                        var filteredRes = res.centers.Where(x => x.sessions.Where(y => y.min_age_limit == minAge && y.available_capacity > 3).ToList().Count > 0).ToList();
 
                         if (filteredRes.Count > 0)
                         {
                             var districtName = filteredRes.FirstOrDefault().district_name;
                             var textMessage = filteredRes.Select(x => new { x.pincode, x.name }).Take(20);
+                            var messageString = new StringBuilder();
+                            messageString.Append($"Vaccines are available | District: {districtName} | Age Limit: {minAge} \n");
+                            foreach (var item in textMessage)
+                            {
+                                var text = $"Hospital: {item.name}. Pincode: {item.pincode} \n";
+                                messageString.Append(text);
+                            }
                             var teClient = new TelegramBotClient(TelegramToken); //Specifiy the telegram token
 
                             foreach (var item in sendersList)
                             {
-                                await teClient.SendTextMessageAsync(item.Value, $"District: {districtName} Age Limit: {minAge} \n" + JsonConvert.SerializeObject(textMessage));
+                                await teClient.SendTextMessageAsync(item.Value, messageString.ToString());
                             }
 
-                            Console.WriteLine("Vaccine Available & Message Sent");
+                            Console.WriteLine($"{districtName} Vaccine Available & Users Notified.");
                         }
                         else
                         {
-                            Console.WriteLine($"No Vaccine: {district}");
+                            Console.WriteLine($"{district}: No Vaccine");
                         }
                     }
                 }
